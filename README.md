@@ -43,6 +43,8 @@ docker exec -it platzi-mysql sh /config_mysql.sh
 
 ### Config django docker
 
+Install requirements and start project app
+
 ```
 docker exec -it platzi-django sh /django_dev.sh
 ```
@@ -51,4 +53,10 @@ Run migrations
 
 ```
 docker exec -it platzi-django python3 ./app/manage.py migrate
+```
+
+Run server
+
+```
+docker exec -it platzi-django sh /django_run.sh
 ```
