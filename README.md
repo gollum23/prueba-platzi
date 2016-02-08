@@ -30,7 +30,7 @@ docker run -idt -p 3306:3306 --volumes-from platzi-data --name=platzi-mysql plat
 
 #### Create docker container for django app
 ```
-docker run -idt -p 8000:8000 --name=platzi-django -v /home/gollum23/PycharmProjects/prueba_platzi/:/opt/django_app/ --privileged=true --link platzi-mysql:mysql platzi/django
+docker run -idt -p 8000:8000 --name=platzi-django -v <ruta folder descarga proyecto>:/opt/django_app/ --privileged=true --link platzi-mysql:mysql platzi/django
 ```
 
 ### Config mysql docker
