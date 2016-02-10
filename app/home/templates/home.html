@@ -14,11 +14,11 @@
     <div class="row text-center">
         <div class="large-6 columns">
             <p>Si tienes una suscripción activa ingresa aquí</p>
-            <a href="#" class="button large">Ingresar</a>
+            <a href="{% url 'home:home' %}" class="button large">Ingresar</a>
         </div>
         <div class="large-6 columns">
             <p>Si aun no tienes una suscripción ingresa aquí</p>
-            <a href="#" class="button large success">Suscribirme</a>
+            <a href="{% url 'home:subscribe' %}" class="button large success">Suscribirme</a>
         </div>
     </div>
 
