@@ -158,3 +158,7 @@ LOGGING = {
 
 # Define default login url for use LoginRequiredMixin or login_required decorator.
 LOGIN_URL = '/'
+
+# Stripe keys
+STRIPE_SECRET_KEY = 'sk_test_9uKqj1UHD5ra2wSsRNM11qjG'
+STRIPE_PUBLIC_KEY = 'pk_test_iUseMD28pgUXZB4YGLfWVSfs'
