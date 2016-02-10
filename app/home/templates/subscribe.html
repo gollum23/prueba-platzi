@@ -1,7 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div class="row">
+        <div class="large12 columns text-center"><h1>Suscripción</h1></div>
+    </div>
     <form action="." method="post">
         {% csrf_token %}
+        <div class="row">
+            <div class="large-12 columns text-center"><h3>Información básica</h3></div>
+        </div>
+        <div class="row">
+            <div class="large-5 columns">{{ form.first_name.label_tag }}{{ form.first_name }}{{ form.first_name.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-5 columns">{{ form.last_name.label_tag }}{{ form.last_name }}{{ form.last_name.errors }}</div>
+            <div class="large-1 columns"></div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns end">
+                {{ form.email.label_tag }}{{ form.email }}{{ form.email.errors }}
+            </div>
+        </div>
         {{ form }}
         <button type="submit" class="button success">Suscribirme :)</button>
     </form>
