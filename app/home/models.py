@@ -14,7 +14,8 @@ class SubscriptionUserData(models.Model):
         verbose_name='Fecha de pago'
     )
     stripe_id = models.CharField(
-        verbose_name='ID Cliente recurente de Stripe'
+        verbose_name='ID Cliente recurente de Stripe',
+        max_length=255
     )
 
     class Meta:
