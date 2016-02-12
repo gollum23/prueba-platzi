@@ -11,10 +11,12 @@ from .models import SubscriptionUserData
 from .forms import SubscriptionForm
 
 
+# Home Page
 class HomeView(TemplateView):
     template_name = 'home.html'
 
 
+# Page with form to suscribe
 class SubscribeView(FormView):
     template_name = 'subscribe.html'
     form_class = SubscriptionForm
@@ -22,6 +24,7 @@ class SubscribeView(FormView):
     success_url = reverse_lazy('home:home')
 
     def form_valid(self, form):
+        # Collect data from form
         username = form.cleaned_data['username']
         password = form.cleaned_data['password1']
         first_name = form.cleaned_data['first_name']
@@ -32,6 +35,7 @@ class SubscribeView(FormView):
         card_year = form.cleaned_data['card_year']
         card_cvc = form.cleaned_data['card_cvc']
 
+        # Try get token form stripe api, if fail, send messages and trigger form_invalid function
         try:
             stripe_token = stripe.Token.create(
                 card={
@@ -46,6 +50,7 @@ class SubscribeView(FormView):
             messages.error(self.request, 'Verifique los datos de su tarjeta de credito')
             return self.form_invalid(form)
 
+        # If stripe_token exist, create customer using stripe api, else customer is None
         if stripe_token:
             customer = stripe.Customer.create(
                 card=stripe_token,
@@ -56,6 +61,7 @@ class SubscribeView(FormView):
         else:
             customer = None
 
+        # If customer exist create user and save needed data from stripe api.
         if customer is not None:
             user = User.objects.create_user(
                 username=username, email=email, password=password)
