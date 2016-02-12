@@ -163,12 +163,12 @@ class UserTest(TestCase):
             amount=amount,
             stripe_id=customer_id
         )
+        get_user = User.objects.get(username='platzi')
 
         # Test user exist
-        self.assertTrue(User.objects.get(username='platzi'))
+        self.assertTrue(get_user)
 
         # Test subscription exist
-        get_user = User.objects.get(username='platzi')
         self.assertTrue(SubscriptionUserData.objects.filter(user=get_user))
 
     # Test post method create subscription
