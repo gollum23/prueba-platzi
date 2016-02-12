@@ -19,7 +19,7 @@ class SubscribeView(FormView):
     template_name = 'subscribe.html'
     form_class = SubscriptionForm
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    success_url = reverse_lazy('home:subscribe')
+    success_url = reverse_lazy('home:home')
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
@@ -46,13 +46,12 @@ class SubscribeView(FormView):
             messages.error(self.request, 'Verifique los datos de su tarjeta de credito')
             return self.form_invalid(form)
 
-
         if stripe_token:
             customer = stripe.Customer.create(
                 card=stripe_token,
                 email=email,
                 description='Suscription test',
-                plan='montlhy'
+                plan='Platzi-Monthly'
             )
         else:
             customer = None
