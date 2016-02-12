@@ -38,12 +38,8 @@ class LoginTest(TestCase):
     def test_login_correct_data(self):
         self.assertTrue(self.client.login(username='platzi', password='platzi2016'))
 
-    # Test login with subscription active (between thirty days from last payment)
 
-    # Test login with subscription defeated (after thirty one days from last payment)
-
-
-class SubscribeTest(TestCase):
+class StripeApiTest(TestCase):
 
     def setUp(self):
         self.card_number_correct = 4242424242424242
