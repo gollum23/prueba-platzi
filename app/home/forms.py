@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 
 # Create tupla with months 01-12
 MONTHS = (
@@ -10,7 +10,25 @@ MONTHS = (
 YEARS = ((i, i) for i in range(2016, 2050))
 
 
-class SubscriptionForm(UserCreationForm):
+class SubscriptionForm(forms.Form):
+    username = forms.CharField(
+        label='Usuario',
+        max_length=30
+    )
+    password1 = forms.CharField(
+        required = True,
+        widget = forms.PasswordInput(render_value = False),
+        label = 'Password',
+        min_length=8,
+        max_length=50
+    )
+    password2 = forms.CharField(
+        required = True,
+        widget = forms.PasswordInput(render_value = False),
+        label = 'Password confirmation',
+        min_length=8,
+        max_length=50
+    )
     first_name = forms.CharField(
         label='Nombres',
         max_length=30,
@@ -42,4 +60,12 @@ class SubscriptionForm(UserCreationForm):
         max_value=999,
         min_value=0
     )
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        if password1 != password2:
+            raise forms.ValidationError('Las contraseñas no son iguales')
+        return cleaned_data
 
