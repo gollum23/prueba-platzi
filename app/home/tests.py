@@ -105,7 +105,7 @@ class SubscribeTest(TestCase):
             card=stripe_token,
             email='g@platzi.com',
             description='Suscription test',
-            plan='montlhy'
+            plan='Platzi-Monthly'
         )
 
         self.assertTrue(customer.id)
@@ -118,11 +118,14 @@ class UserTest(TestCase):
         self.card_cvc_correct = 123
         self.card_number_incorrect = 4242424242424243
         self.card_cvc_incorrect = 124
-        self.card_month = 6
+        self.card_month = '06'
         self.card_year = 2020
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
-        self.stripe_token = stripe.Token.create(
+    # Test create user with customer id
+    def test_save_user_basic_and_stripe_data(self):
+
+        stripe_token = stripe.Token.create(
             card={
                 'number': self.card_number_correct,
                 'exp_month': self.card_month,
@@ -131,25 +134,22 @@ class UserTest(TestCase):
             }
         )
 
-        self.customer = stripe.Customer.create(
-            card=self.stripe_token,
-            email='g@platzi.com',
+        customer = stripe.Customer.create(
+            card=stripe_token,
+            email='test@platzi.com',
             description='Suscription test',
-            plan='montlhy'
+            plan='Platzi-Monthly'
         )
-
-    # Test create user with customer id
-    def test_save_user_basic_and_stripe_data(self):
 
         username = 'platzi'
         password = 'platzi2016'
-        email = 'g@platzi.com'
+        email = 't@platzi.com'
         first_name = 'diego'
         last_name = 'forero'
-        customer_id = self.customer.id
-        payment_date = datetime.utcfromtimestamp(self.customer.created)
+        customer_id = customer.id
+        payment_date = datetime.utcfromtimestamp(customer.created)
         print(payment_date)
-        amount = self.customer.subscriptions.data[0].plan.amount/100
+        amount = customer.subscriptions.data[0].plan.amount/100
         print(amount)
 
         user = User.objects.create_user(username=username, email=email, password=password)
@@ -171,18 +171,29 @@ class UserTest(TestCase):
         # Test subscription exist
         self.assertTrue(SubscriptionUserData.objects.filter(user=get_user))
 
-    # Test post method create subscription
+    # Test post method create subscription view
     def test_save_post_method(self):
-        req = self.client.post('/suscripcion/', data={
-            'username': 'platzi',
-            'password': 'platzi2016',
-            'email': 'g@platzi.com',
+        res = self.client.post('/suscripcion/', data={
+            'username': 'platzipost',
+            'password1': 'platzi2016',
+            'password2': 'platzi2016',
+            'email': 'test_post@platzi.com',
             'first_name': 'diego',
             'last_name': 'forero',
-            'customer_id': self.customer.id,
-            'payment_date': datetime.utcfromtimestamp(self.customer.created),
-            'amount': self.customer.subscriptions.data[0].plan.amount/100
+            'card_number': self.card_number_correct,
+            'card_name': 'diego forero',
+            'card_month': self.card_month,
+            'card_year': self.card_year,
+            'card_cvc': self.card_cvc_correct
         })
 
-        self.assertEqual(req.status_code, 200)
+        # If post is successful redirect to gratefulness page
+        self.assertEqual(res.status_code, 302)
+
+        # Check if user is saved
+        self.assertTrue(User.objects.get(username='platzipost'))
+
+        # Check if subscription data is saved
+        user = User.objects.get(username='platzipost')
+        self.assertTrue(SubscriptionUserData.objects.get(user=user))
 
