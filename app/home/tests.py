@@ -8,6 +8,7 @@ import stripe
 from .models import SubscriptionUserData
 
 
+# This test is for to practice and learn how to make unnittesting
 class BasicTest(TestCase):
 
     def test_views(self):
@@ -21,6 +22,7 @@ class BasicTest(TestCase):
         self.assertEqual(res.status_code, 200)
 
 
+# This test is for to practice and learn how to make unnittesting
 class LoginTest(TestCase):
 
     def setUp(self):
