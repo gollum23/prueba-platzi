@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Subscripción exitosa{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="large-12 columns text-center"><h1>Gracias! :)</h1></div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns text-center">
+            <p>Su suscripción se completo de manera exitosa</p>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="large-6 columns">
+            <p>Ir al inicio</p>
+            <a href="{% url 'home:home' %}" class="button large">Inicio</a>
+        </div>
+        <div class="large-6 columns">
+            <p>Ingresar</p>
+            <a href="{% url 'home:home' %}" class="button large success">Ingresar</a>
+        </div>
+    </div>
+
+{% endblock %}
