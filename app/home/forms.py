@@ -49,16 +49,17 @@ class SubscriptionForm(forms.Form):
         label='Nombre como aparece en la tarjeta'
     )
     card_month = forms.ChoiceField(
-        label='Mes',
+        label='Mes de vencimiento',
         choices=MONTHS
     )
     card_year = forms.ChoiceField(
-        label='Año',
+        label='Año de vencimiento',
         choices=YEARS
     )
     card_cvc = forms.IntegerField(
         max_value=999,
-        min_value=0
+        min_value=0,
+        label='Código de seguridad'
     )
 
     def clean(self):
