@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Suscripción Mensual{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="large12 columns text-center"><h1>Suscripción</h1></div>
+    </div>
+    <form action="." method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="large-12 columns text-center"><h3>Información personal</h3></div>
+        </div>
+        <div class="row">
+            <div class="large-5 columns">{{ form.first_name.label_tag }}{{ form.first_name }}{{ form.first_name.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-5 columns">{{ form.last_name.label_tag }}{{ form.last_name }}{{ form.last_name.errors }}</div>
+            <div class="large-1 columns"></div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns end">
+                {{ form.email.label_tag }}{{ form.email }}{{ form.email.errors }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns text-center"><h3>Información de registro</h3></div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">{{ form.username.label_tag }}{{ form.username }}{{ form.username.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-3 columns">{{ form.password1.label_tag }}{{ form.password1 }}{{ form.password1.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-3 columns end">{{ form.password2.label_tag }}{{ form.password2}}{{ form.password2.errors }}</div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns text-center"><h3>Información Tarjeta de Credito/Debito</h3></div>
+        </div>
+        <div class="row">
+            <div class="large-5 columns">{{ form.card_number.label_tag }}{{ form.card_number}}{{ form.card_number.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-5 columns">{{ form.card_name.label_tag }}{{ form.card_name}}{{ form.card_name.errors }}</div>
+            <div class="large-1 columns"></div>
+        </div>
+        <div class="row">
+            <div class="large-3 columns">{{ form.card_month.label_tag }}{{ form.card_month}}{{ form.card_month.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-3 columns">{{ form.card_year.label_tag }}{{ form.card_year}}{{ form.card_year.errors }}</div>
+            <div class="large-1 columns"></div>
+            <div class="large-3 columns end">{{ form.card_cvc.label_tag }}{{ form.card_cvc}}{{ form.card_cvc.errors }}</div>
+        </div>
+
+        <div class="row">
+            <div class="large-9 columns">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{% if message.tags == 'error' %}alert callout{% endif %}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="large-2 columns end text-right">
+                <button type="submit" class="button success">Suscribirme :)</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

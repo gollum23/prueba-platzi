@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":[],"mappings":"AAAA,CAAC,YAAY;AACT,gBAAY;;;AAAC;AAGb,KAAC,CAAC,QAAQ,CAAC,CAAC,UAAU,EAAE,CAAA;CAC3B,CAAA,EAAG,CAAC","file":"main-compiled.js","sourcesContent":["(function () {\n    \"use strict\";\n\n    /* Initialize foundation */\n    $(document).foundation()\n})();\n"]}

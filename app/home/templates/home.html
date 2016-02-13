@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Bienvenido a mi sistema de suscripción{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="large-12 columns text-center"><h1>Hola Platzi! :)</h1></div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns text-center">
+            <p>Sistema de suscripción mensual de prueba para platzi</p>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="large-6 columns">
+            <p>Si tienes una suscripción activa ingresa aquí</p>
+            <a href="{% url 'home:home' %}" class="button large">Ingresar</a>
+        </div>
+        <div class="large-6 columns">
+            <p>Si aun no tienes una suscripción ingresa aquí</p>
+            <a href="{% url 'home:subscribe' %}" class="button large success">Suscribirme</a>
+        </div>
+    </div>
+
+{% endblock %}
