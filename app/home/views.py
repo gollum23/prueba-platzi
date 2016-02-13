@@ -16,12 +16,12 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
-# Page with form to suscribe
+# View with form to subscribe
 class SubscribeView(FormView):
     template_name = 'subscribe.html'
     form_class = SubscriptionForm
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    success_url = reverse_lazy('home:home')
+    success_url = reverse_lazy('home:success')
 
     def form_valid(self, form):
         # Collect data from form
@@ -80,3 +80,8 @@ class SubscribeView(FormView):
             )
             
             return super(SubscribeView, self).form_valid(form)
+
+
+# View for success subscription
+class SubscribeSuccessView(TemplateView):
+    template_name = 'subscribe_success.html'
