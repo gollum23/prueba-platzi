@@ -30,8 +30,11 @@ class SubscribeView(FormView):
         first_name = form.cleaned_data['first_name']
         last_name = form.cleaned_data['last_name']
         email = form.cleaned_data['email']
+
+        # Get token from form using stripejs library
         token = self.request.POST.get('stripeToken', None)
 
+        # Create customer usign token
         customer = stripe.Customer.create(
             source=token,
             email=email,
