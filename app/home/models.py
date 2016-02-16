@@ -7,7 +7,7 @@ class SubscriptionUserData(models.Model):
         User,
         verbose_name='Usuario'
     )
-    amount = models.SmallIntegerField(
+    amount = models.IntegerField(
         verbose_name='Monto o cantidad'
     )
     payment_date = models.DateTimeField(
