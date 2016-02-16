@@ -42,7 +42,10 @@ class SubscriptionForm(forms.Form):
     )
     card_number = forms.IntegerField(
         label='Número de tarjeta',
-        max_value=9999999999999999
+        max_value=9999999999999999,
+        widget=forms.TextInput(
+            attrs={'data-stripe': 'number'}
+        )
     )
     card_name = forms.CharField(
         max_length=50,
@@ -50,16 +53,25 @@ class SubscriptionForm(forms.Form):
     )
     card_month = forms.ChoiceField(
         label='Mes de vencimiento',
-        choices=MONTHS
+        choices=MONTHS,
+        widget=forms.Select(
+            attrs={'data-stripe': 'exp-month'}
+        )
     )
     card_year = forms.ChoiceField(
         label='Año de vencimiento',
-        choices=YEARS
+        choices=YEARS,
+        widget=forms.Select(
+            attrs={'data-stripe': 'exp-year'}
+        )
     )
     card_cvc = forms.IntegerField(
         max_value=999,
         min_value=0,
-        label='Código de seguridad'
+        label='Código de seguridad',
+        widget=forms.TextInput(
+            attrs={'data-stripe': 'cvc'}
+        )
     )
 
     def clean(self):
