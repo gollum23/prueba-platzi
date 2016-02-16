@@ -4,7 +4,7 @@
     <div class="row">
         <div class="large12 columns text-center"><h1>Suscripción</h1></div>
     </div>
-    <form action="." method="post">
+    <form action="." method="post" id="subscription_form">
         {% csrf_token %}
         <div class="row">
             <div class="large-12 columns text-center"><h3>Información personal</h3></div>
@@ -49,11 +49,7 @@
 
         <div class="row">
             <div class="large-9 columns">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="{% if message.tags == 'error' %}alert callout{% endif %}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
+                <div class="card_error error alert callout"></div>
             </div>
             <div class="large-2 columns end text-right">
                 <button type="submit" class="button success">Suscribirme :)</button>

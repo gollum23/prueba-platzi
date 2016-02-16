@@ -30,36 +30,14 @@ class SubscribeView(FormView):
         first_name = form.cleaned_data['first_name']
         last_name = form.cleaned_data['last_name']
         email = form.cleaned_data['email']
-        card_number = form.cleaned_data['card_number']
-        card_month = form.cleaned_data['card_month']
-        card_year = form.cleaned_data['card_year']
-        card_cvc = form.cleaned_data['card_cvc']
+        token = self.request.POST.get('stripeToken', None)
 
-        # Try get token form stripe api, if fail, send messages and trigger form_invalid function
-        try:
-            stripe_token = stripe.Token.create(
-                card={
-                    'number': card_number,
-                    'exp_month': card_month,
-                    'exp_year': card_year,
-                    'cvc': card_cvc
-                }
-            )
-        except:
-            stripe_token = None
-            messages.error(self.request, 'Verifique los datos de su tarjeta de credito')
-            return self.form_invalid(form)
-
-        # If stripe_token exist, create customer using stripe api, else customer is None
-        if stripe_token:
-            customer = stripe.Customer.create(
-                card=stripe_token,
-                email=email,
-                description='Suscription test',
-                plan='Platzi-Monthly'
-            )
-        else:
-            customer = None
+        customer = stripe.Customer.create(
+            source=token,
+            email=email,
+            description='Suscription test',
+            plan='Platzi-Monthly'
+        )
 
         # If customer exist create user and save needed data from stripe api.
         if customer is not None:
@@ -67,10 +45,10 @@ class SubscribeView(FormView):
                 username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
-            user.save()
+            # user.save()
 
             payment_date = datetime.utcfromtimestamp(customer.created)
-            amount = customer.subscriptions.data[0].plan.amount/100
+            amount = customer.subscriptions.data[0].plan.amount
 
             SubscriptionUserData.objects.create(
                 user=user,
