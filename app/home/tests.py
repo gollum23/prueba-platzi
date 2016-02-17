@@ -189,11 +189,11 @@ class UserTest(TestCase):
             'first_name': 'diego',
             'last_name': 'forero',
             'stripeToken': stripe_token.id,
-            'card_number': self.card_number_correct,
-            'card_name': 'diego forero',
-            'card_month': self.card_month,
-            'card_year': self.card_year,
-            'card_cvc': self.card_cvc_correct
+            'card_number': self.card_number_correct, # Field is required
+            'card_name': 'diego forero', # Field is required
+            'card_month': self.card_month, # Field is required
+            'card_year': self.card_year, # Field is required
+            'card_cvc': self.card_cvc_correct # Field is required
         })
 
         # token = res.method.POST.get('stripeToken', None)
