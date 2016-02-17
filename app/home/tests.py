@@ -129,7 +129,7 @@ class UserTest(TestCase):
                 'exp_month': self.card_month,
                 'exp_year': self.card_year,
                 'cvc': self.card_cvc_correct
-            }
+            },
         )
 
         customer = stripe.Customer.create(
@@ -171,6 +171,16 @@ class UserTest(TestCase):
 
     # Test post method create subscription view
     def test_save_post_method(self):
+        # Create stripe token simulating StripeJS process
+        stripe_token = stripe.Token.create(
+            card={
+                'number': self.card_number_correct,
+                'exp_month': self.card_month,
+                'exp_year': self.card_year,
+                'cvc': self.card_cvc_correct
+            },
+        )
+
         res = self.client.post('/suscripcion/', data={
             'username': 'platzipost',
             'password1': 'platzi2016',
@@ -178,12 +188,15 @@ class UserTest(TestCase):
             'email': 'test_post@platzi.com',
             'first_name': 'diego',
             'last_name': 'forero',
+            'stripeToken': stripe_token.id,
             'card_number': self.card_number_correct,
             'card_name': 'diego forero',
             'card_month': self.card_month,
             'card_year': self.card_year,
             'card_cvc': self.card_cvc_correct
         })
+
+        # token = res.method.POST.get('stripeToken', None)
 
         # If post is successful redirect to gratefulness page
         self.assertEqual(res.status_code, 302)
