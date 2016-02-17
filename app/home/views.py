@@ -48,9 +48,9 @@ class SubscribeView(FormView):
                 username=username, email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
-            # user.save()
+            user.save()
 
-            payment_date = datetime.utcfromtimestamp(customer.created)
+            payment_date = datetime.fromtimestamp(customer.created)
             amount = customer.subscriptions.data[0].plan.amount
 
             SubscriptionUserData.objects.create(
